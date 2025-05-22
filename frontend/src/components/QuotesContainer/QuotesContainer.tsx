@@ -5,6 +5,7 @@ import {
   Typography,
   Chip,
   Pagination,
+  Box,
 } from '@mui/material';
 import {
   SearchContainer,
@@ -21,6 +22,7 @@ import {
 import EmptyState from '../EmptyState';
 import { Quote } from '../../types/quotes';
 import { useGetQuotes } from '../../hooks/useGetQuotes';
+import { AutoAwesome } from '@mui/icons-material';
 
 const QuotesContainer: React.FC = () => {
   const [count, setCount] = useState<number>(5);
@@ -29,6 +31,7 @@ const QuotesContainer: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [totalQuotes, setTotalQuotes] = useState<number>(0);
+  const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
 
   const { mutate: fetchQuotes, isPending, error } = useGetQuotes();
 
@@ -41,6 +44,7 @@ const QuotesContainer: React.FC = () => {
           setTotalPages(data.totalPages);
           setCurrentPage(data.page);
           setTotalQuotes(data.totalQuotes);
+          setIsFirstLoad(false);
         },
       }
     );
@@ -82,12 +86,17 @@ const QuotesContainer: React.FC = () => {
           onClick={() => handleFetchQuotes(1)}
           disabled={isPending || !count || count < 1}
           size="large"
+          startIcon={<AutoAwesome />}
           sx={{ 
             height: '56px',
-            width: '180px',
+            width: '230px',
             fontSize: '1.1rem',
+            fontWeight: 600,
             px: 4,
-            position: 'relative'
+            position: 'relative',
+            '& .MuiButton-startIcon': {
+              marginRight: 1
+            }
           }}
         >
           <span style={{ visibility: isPending ? 'hidden' : 'visible' }}>
@@ -115,33 +124,52 @@ const QuotesContainer: React.FC = () => {
       )}
 
       <ResultsContainer>
-        {quotes.length === 0 && !isPending && <EmptyState />}
-        {quotes.map((quote) => (
-          <QuoteCard key={quote.id}>
-            <QuoteText>
-              "{quote.body}"
-            </QuoteText>
-            <AuthorText>
-              {quote.author}
-            </AuthorText>
-            <TagsContainer>
-              {quote.tags?.map((tag) => (
-                <Chip
-                  key={tag}
-                  label={tag}
-                  size="small"
-                  sx={{
-                    backgroundColor: 'primary.light',
-                    color: 'white',
-                    '&:hover': {
-                      backgroundColor: 'primary.main',
-                    },
-                  }}
-                />
-              ))}
-            </TagsContainer>
-          </QuoteCard>
-        ))}
+        {isPending && isFirstLoad ? (
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            gap: 2,
+            py: 4 
+          }}>
+            <CircularProgress size={40} />
+            <Typography variant="h6" color="text.secondary" align="center">
+              Generating your quotes...
+            </Typography>
+            <Typography variant="body2" color="text.secondary" align="center">
+              First request might take a bit longer as we're using free tier hosting
+            </Typography>
+          </Box>
+        ) : quotes.length === 0 && !isPending ? (
+          <EmptyState />
+        ) : (
+          quotes.map((quote) => (
+            <QuoteCard key={quote.id}>
+              <QuoteText>
+                "{quote.body}"
+              </QuoteText>
+              <AuthorText>
+                {quote.author}
+              </AuthorText>
+              <TagsContainer>
+                {quote.tags?.map((tag) => (
+                  <Chip
+                    key={tag}
+                    label={tag}
+                    size="small"
+                    sx={{
+                      backgroundColor: 'primary.light',
+                      color: 'white',
+                      '&:hover': {
+                        backgroundColor: 'primary.main',
+                      },
+                    }}
+                  />
+                ))}
+              </TagsContainer>
+            </QuoteCard>
+          ))
+        )}
       </ResultsContainer>
 
       {quotes.length > 0 && (

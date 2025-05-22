@@ -1,16 +1,23 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 import {
-    EmptyStateContainer,
-    EmptyStateIllustration,
-    EmptyStateText,
+  EmptyStateContainer,
+  EmptyStateIllustration,
+  EmptyStateText,
 } from './QuotesApp/QuotesApp.styles';
-import emptyStateIllustration from '../assets/empty-state-illustration.svg';
+import quotelyIcon from '../assets/quotely-icon.png';
 
 const EmptyState: React.FC = () => (
   <EmptyStateContainer>
     <EmptyStateIllustration>
-      <img src={emptyStateIllustration} alt="Empty state illustration" />
+      <img 
+        src={quotelyIcon} 
+        alt="Quotely icon" 
+        style={{ 
+          maxWidth: '200px',
+          height: 'auto'
+        }}
+      />
     </EmptyStateIllustration>
     <EmptyStateText>
       <Typography variant="h4" sx={{ mb: 2, color: 'text.primary', fontWeight: 500 }}>
