@@ -68,25 +68,4 @@ export const ToggleButton = styled(IconButton)<SectionProps>`
   &:hover {
     background-color: rgba(255, 255, 255, 0.1) !important;
   }
-`;
-
-export const EmptyStateContainer = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  width: 100%;
-  min-height: 60vh;
-`;
-
-export const EmptyStateIllustration = styled(Box)`
-  margin-bottom: 2rem;
-`;
-
-export const EmptyStateText = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
 `; 

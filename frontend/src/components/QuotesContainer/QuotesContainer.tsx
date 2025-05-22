@@ -19,7 +19,7 @@ import {
   PaginationContainer,
   PaginationWrapper,
 } from './QuotesContainer.styles';
-import EmptyState from '../EmptyState';
+import EmptyState from '../EmptyState/EmptyState';
 import { Quote } from '../../types/quotes';
 import { useGetQuotes } from '../../hooks/useGetQuotes';
 import { AutoAwesome } from '@mui/icons-material';
@@ -141,7 +141,7 @@ const QuotesContainer: React.FC = () => {
             </Typography>
           </Box>
         ) : quotes.length === 0 && !isPending ? (
-          <EmptyState />
+          <EmptyState onGenerateQuotes={() => handleFetchQuotes(1)} />
         ) : (
           quotes.map((quote) => (
             <QuoteCard key={quote.id}>
