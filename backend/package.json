@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/app.js",
   "scripts": {
-    "start": "NODE_OPTIONS='--experimental-specifier-resolution=node' node dist/app.js",
+    "start": "node dist/app.js",
     "dev": "NODE_OPTIONS='--loader ts-node/esm' node src/app.ts",
     "build": "tsc",
     "watch": "tsc -w"

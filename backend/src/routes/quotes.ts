@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
-import { quoteService } from '../services/quoteService';
-import { FilterType, QuoteFilterOptions } from '../types/quote';
+import { quoteService } from '../services/quoteService.js';
+import { FilterType, QuoteFilterOptions } from '../types/quote.js';
 
 const router = Router();
 
